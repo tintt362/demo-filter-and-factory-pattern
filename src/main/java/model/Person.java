@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "persion")
-public class Person implements Serializable {
+public abstract class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +20,7 @@ public class Person implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
+    public abstract String getName();
 
     public void setName(String name) {
         this.name = name;
