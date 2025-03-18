@@ -23,10 +23,10 @@ public class Client {
 
         List<Person> persons = new ArrayList<Person>();
 
-        Staff staff1 = (Staff) FactoryClass.getPerson(PersonEnum.EMPLOYEE);
+        Staff staff1 = (Staff) FactoryClass.getPerson(PersonEnum.STAFF);
         staff1.setName("Anh");
 
-        Staff staff2 = (Staff) FactoryClass.getPerson(PersonEnum.EMPLOYEE);
+        Staff staff2 = (Staff) FactoryClass.getPerson(PersonEnum.STAFF);
         staff2.setName("Khoa");
 
         Banker banker1 = (Banker) FactoryClass.getPerson(PersonEnum.BANKER);
@@ -35,13 +35,13 @@ public class Client {
         Banker banker2 = (Banker) FactoryClass.getPerson(PersonEnum.BANKER);
         banker2.setName("Khang");
 
-        Staff staff3 = (Staff) FactoryClass.getPerson(PersonEnum.EMPLOYEE);
+        Staff staff3 = (Staff) FactoryClass.getPerson(PersonEnum.STAFF);
         staff3.setName("Khoa");
 
         Banker banker3 = (Banker) FactoryClass.getPerson(PersonEnum.BANKER);
         banker3.setName("ANH");
 
-        Staff staff4 = (Staff) FactoryClass.getPerson(PersonEnum.EMPLOYEE);
+        Staff staff4 = (Staff) FactoryClass.getPerson(PersonEnum.STAFF);
         staff4.setName("Anh");
 
         persons.add(staff1);

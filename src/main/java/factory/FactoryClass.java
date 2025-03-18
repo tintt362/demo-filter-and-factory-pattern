@@ -11,7 +11,7 @@ public class FactoryClass {
         switch (personEnum) {
             case BANKER:
                 return new Banker();
-            case EMPLOYEE:
+            case STAFF:
                 return new Staff();
 
             default:
