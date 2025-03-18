@@ -10,6 +10,7 @@ import util.HibernateUtil;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,20 +59,37 @@ public class Client {
 
         printPersons(filteredPersons );
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
             System.out.println("Connect db: " + session);
 
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Staff> criteria = builder.createQuery(Staff.class);
+            Root<Staff> staffRoot = criteria.from(Staff.class);
+            Predicate condition = builder.like(staffRoot.get("name"), "%A%");
+            criteria.where(condition);
+            List<Staff> result = session.createQuery(criteria).getResultList();
+            result.forEach(r -> System.out.println("Table Staff:" + r.getName()));
+
+        Session session2 = HibernateUtil.getSessionFactory().openSession();
+
+            CriteriaQuery<Banker> criteria2 = builder.createQuery(Banker.class);
+            Root<Banker> staffRoot2 = criteria2.from(Banker.class);
+            Predicate condition2 = builder.like(staffRoot2.get("name"), "%A%");
+
+
+
+        criteria.where(condition2);
+            List<Banker> result2 = session2.createQuery(criteria2).getResultList();
+            result2.forEach(r -> System.out.println("Table Banker:" + r.getName()));
             session.beginTransaction();
-            //
-            for (Person person : filteredPersons) {
-                session.save(person);
-            }
+            // insert data
+//            for (Person person : filteredPersons) {
+//                session.save(person);
+//            }
 
 
             session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
     public static void printPersons(List<Person> persons){
 
