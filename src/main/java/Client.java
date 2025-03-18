@@ -5,7 +5,12 @@ import factory.FactoryClass;
 import model.Staff;
 import model.Banker;
 import model.Person;
+import org.hibernate.Session;
+import util.HibernateUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +43,6 @@ public class Client {
         Staff staff4 = (Staff) FactoryClass.getPerson(PersonEnum.EMPLOYEE);
         staff4.setName("Anh");
 
-        // Thêm tất cả các đối tượng vào danh sách
         persons.add(staff1);
         persons.add(staff2);
         persons.add(banker1);
@@ -48,13 +52,26 @@ public class Client {
         persons.add(staff4);
 
 
-        // Tạo đối tượng Criteria (lọc theo tên "Anh" hoặc "Khoa")
         Criteria nameCriteria = new NameCriteria();
 
-        // Áp dụng tiêu chí lọc
         List<Person> filteredPersons = nameCriteria.meetCriteria(persons);
 
         printPersons(filteredPersons );
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            System.out.println("Connect db: " + session);
+
+            session.beginTransaction();
+            //
+            for (Person person : filteredPersons) {
+                session.save(person);
+            }
+
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public static void printPersons(List<Person> persons){
 
